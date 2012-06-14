@@ -28,7 +28,10 @@ while 1,
             lower = (100 - lower) / 100;
         end
         
-        drawPriceChart(warrant, upper, lower, 1);
+        [upper_y, flat_y, lower_y] = drawPriceChart(warrant, upper, lower, 1);
+        
+        fprintf('7-day spot-up return: %.2f%%\n', upper_y(8)*100/flat_y(1) - 100);
+        fprintf('7-day spot-down return: %.2f%%\n', lower_y(8)*100/flat_y(1) - 100);
                 
     end
 end

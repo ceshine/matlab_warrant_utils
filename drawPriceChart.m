@@ -1,4 +1,4 @@
-function [ output_args ] = drawPriceChart( warrant, upper_limit, lower_limit, call)
+function [ upper_y, flat_y, lower_y ] = drawPriceChart( warrant, upper_limit, lower_limit, call)
 %DRAWPRICECHART Summary of this function goes here
 %   Detailed explanation goes here
     global warrants stocks;
