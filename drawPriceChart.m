@@ -8,10 +8,10 @@ function [ upper_y, flat_y, lower_y ] = drawPriceChart( warrant, upper_limit, lo
     strike_price = data(2);
     mature_date = data(4);
     implied_volatility = data(3);
-    spot_price = stocks.(obj.spot);
+    spot_price = stocks.(obj.spot).price;
 
 
-    date_axis = [datenum(date):1:mature_date];
+    date_axis = datenum(date):1:mature_date;
     flat_y = zeros(1, length(date_axis));
     upper_y = flat_y;
     lower_y = flat_y;

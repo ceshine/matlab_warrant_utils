@@ -8,17 +8,17 @@ function [ price, leverage ] = getLeverage( warrant, call)
     strike_price = data(2);
     mature_date = data(4);
     implied_volatility = data(3);
-    [CP, PP] = customBls( stocks.(obj.spot), mature_date - datenum(date) + 1, ratio, strike_price, implied_volatility);    
+    [CP, PP] = customBls( stocks.(obj.spot).price, mature_date - datenum(date) + 1, ratio, strike_price, implied_volatility);    
     if call == true,
         price = CP;
     else 
         price = PP;
     end
-    [CD, PD] = customBlsDelta( stocks.(obj.spot),  mature_date - datenum(date) + 1, ratio, strike_price, implied_volatility);  
+    [CD, PD] = customBlsDelta( stocks.(obj.spot).price,  mature_date - datenum(date) + 1, ratio, strike_price, implied_volatility);  
     if call == true,
-       leverage = stocks.(obj.spot) * data(1) * CD / price;
+       leverage = stocks.(obj.spot).price * data(1) * CD / price;
     else 
-       leverage = stocks.(obj.spot) * data(1) * PD / price;
+       leverage = stocks.(obj.spot).price * data(1) * PD / price;
     end    
 end
 
