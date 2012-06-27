@@ -1,6 +1,6 @@
 % Warrants data import
 [~, ~, tmp] = xlsread('warrants.csv');
-global warrants stocks;
+
 warrants = struct();
 [r, c] = size(tmp);
 for i = 2:r,

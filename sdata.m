@@ -1,5 +1,6 @@
 % Stock data import
 [~, ~, tmp] = xlsread('stocks.csv');
+
 stocks = struct();
 [r, c] = size(tmp);
 for i = 1:r, % no header

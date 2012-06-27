@@ -1,0 +1,20 @@
+warrant = input('\nWarrant Symbol:  ', 's');
+ddate = input('Target Date(YYYY-MM-DD): ', 's');
+price = input('Target Spot Price: ');
+
+tdate = datenum(ddate);
+
+warrant = strcat('w', warrant);
+
+obj  = warrants.(warrant);
+data = obj.data;
+strike_ratio = data(1);
+strike_price = data(2);
+mature_date = data(4);
+implied_volatility = data(3);
+
+tprice = blsprice(price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-tdate+1)/365, implied_volatility);
+cprice =  blsprice(price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-tdate+1)/365, implied_volatility);
+
+fprintf('\nSpot Price for %s: %.2f\n', warrants.(warrant).spot, stocks.(warrants.(warrant).spot).price);
+fprintf('Warrant Price: %.2f\n', price);
