@@ -29,7 +29,7 @@ function [ upper_y, flat_y, lower_y ] = drawPriceChart( warrant, upper_limit, lo
         lower_y(idx) = Put;
     end
     
-    
+    clf
     hFig = figure(1);
     set(hFig, 'Position', [400 100 1000 800])
 

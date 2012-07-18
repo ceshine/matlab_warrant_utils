@@ -2,6 +2,7 @@ function [ price, leverage ] = getLeverage( warrant, call)
 %GETLEVERAGE Return the price and actual leverage for given warrant
 %   Detailed explanation goes here
     global warrants stocks;
+
     obj  = warrants.(warrant);
     data = obj.data;
     ratio = data(1);

@@ -14,7 +14,7 @@ else
     if isempty(upper)
         upper = 1.03;
     elseif upper == 0
-        continue
+        return
     else
         upper = (100+upper)/100;
     end 
