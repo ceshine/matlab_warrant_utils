@@ -5,7 +5,7 @@ function [ result ] = sql_query( query )
         bsr_db
     else
         try
-            ping(conn)
+            ping(conn);
         catch err
             bsr_db
         end
