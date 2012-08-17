@@ -32,7 +32,7 @@ tbuy = sql_query(query);
 
 query = sprintf(query_template, symbol, symbol, 'ASC', N);
 tsell = sql_query(query);
-title_s = sprintf('Top %d 主力 for %d', N, symbol);
+title_s = sprintf('Accumulated Top %d 主力 for %d', N, symbol);
 bsr_sum_chart(cell2mat(tbuy(:,2)), cell2mat(tsell(:,2)), tsell(:,1), title_s)
 
 hold off
