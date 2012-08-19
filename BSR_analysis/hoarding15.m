@@ -24,7 +24,7 @@ hold on
 subplot(2,1,1)
 query = sprintf(query_template, ddate, ddate);
 result = sql_query(query);
-title_s = sprintf('%s 主力買超排行', ddate);
+title_s = sprintf('%s TOP15主力買超排行', ddate);
 bsr_ranking_chart(cell2mat(result(:,3)), cell2mat(result(:,4)), cell2mat(result(:,5)), result(:,1), title_s)
 
 t = uitable('data', [result(:,1) result(:,2) result(:,6)],'RowName',[],'ColumnName',[],'Position', [400 10 370 350], 'ColumnWidth', {80, 200, 80}, 'FontSize', 10);
