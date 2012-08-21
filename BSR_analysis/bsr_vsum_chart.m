@@ -1,7 +1,7 @@
 function [ output_args ] = bsr_sum_chart( tbuy, tsell, volume, ddate, title_s)
 %BSR_SUM_CHART Summary of this function goes here
 %   Detailed explanation goes here
-    bsn = [ tbuy tsell*-1 tbuy+tsell tbuy-tsell volume] / 1000;
+    bsn = [ tbuy tsell*-1 tbuy+tsell (tbuy-tsell)/2 volume] / 1000;
     
     h = bar(bsn);
     set(h(1), 'facecolor', 'red')
