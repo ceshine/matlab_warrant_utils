@@ -1,11 +1,12 @@
-symbol = input('\nSymbol:  ');
+symbol = input('Symbol:  ');
 broker = input('Broker Name: ', 's');
 query_template = [ 'SELECT date, SUM(buy), SUM(sell), SUM(buy)-SUM(sell) ' ...
                    'FROM bsreport WHERE broker_id = (SELECT id FROM brokers WHERE name = "%s") AND company_id = %d ' ... 
                    'GROUP BY date;' ];
 
                
-query_template_2 = [ 'SELECT date, high, low, open, close FROM twse_stock_prices WHERE company_id = %d;'];
+query_template_2 = [ 'SELECT a.date, high, low, open, close FROM (SELECT date, high, low, open, close FROM twse_stock_prices WHERE company_id = %d) AS a '...
+                      'JOIN (SELECT date FROM bsreport WHERE broker_id = (SELECT id FROM brokers WHERE name = "%s") AND company_id = %d GROUP BY date) AS b ON a.date = b.date;'];
 
 
 scrsz = get(0, 'ScreenSize');
@@ -15,7 +16,7 @@ hold on
 query = sprintf(query_template, broker, symbol);
 result = sql_query(query);
 
-query2 = sprintf(query_template_2, symbol);
+query2 = sprintf(query_template_2, symbol, broker, symbol);
 prices = sql_query(query2);
 HLOC = [cell2mat(prices(:,2)), cell2mat(prices(:,3)), cell2mat(prices(:,4)), cell2mat(prices(:,5))];
 
