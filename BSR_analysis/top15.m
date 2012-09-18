@@ -1,4 +1,4 @@
-symbol = input('\nSymbol:  ');
+symbol = input('Symbol:  ');
 from_d = input('From Date: ', 's');
 to_d = input('Until Date: ', 's');
 query_template = [ 'SELECT broker_id, name, tbuy, tsell, net ' ...
