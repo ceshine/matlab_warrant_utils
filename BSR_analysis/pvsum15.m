@@ -12,7 +12,7 @@ query_template = [ 'SELECT ddate, tbuy, tsell, volume '...
 query_template_2 = [ 'SELECT date, high, low, open, close FROM twse_stock_prices WHERE company_id = %d;'];
 
 scrsz = get(0, 'ScreenSize');
-figure('Position', [50 100 scrsz(3)*0.6 scrsz(4)*0.6]);        
+figure('Position', [50 100 scrsz(3)*0.9 scrsz(4)*0.6]);        
 
 hold on
 
