@@ -4,10 +4,14 @@ function [ output_args ] = bsr_broker_bydate_chart( bsn, ddate, HLOC, title_s )
     bsn = bsn / 1000;
     
     subplot('position',[0.05 0.6 0.9 0.35]);    
-    bar(bsn)  
+    h = bar(bsn);
     set(gca,'XTick',1:1:size(bsn,1))
     set(gca,'XTickLabel', datestr(datenum(ddate), 'mmdd'))
     xlim([0 size(bsn,1)+1]);
+    
+    set(h(1), 'facecolor', 'red')
+    set(h(2), 'facecolor', 'green')
+    set(h(3), 'facecolor', 'blue')
     
     title(title_s);
     
