@@ -164,5 +164,5 @@ pip-log.txt
 # Mac crap
 .DS_Store
 
-*.mat
+db*.mat
 *.asv
