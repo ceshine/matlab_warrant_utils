@@ -22,3 +22,8 @@ subplot(2,1,2);
 bsr_bybroker_chart([cell2mat(result(:,3)), cell2mat(result(:,4))*-1, cell2mat(result(:,5))], result(:,2), title_s);
 
 hold off
+
+set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
+savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
+mkdir(savepath);
+print(gcf, '-dpng', fullfile(savepath,sprintf('dtop15@%s.png',date)), '-r100');

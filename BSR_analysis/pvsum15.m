@@ -14,6 +14,7 @@ query_template_2 = [ 'SELECT date, high, low, open, close FROM twse_stock_prices
 scrsz = get(0, 'ScreenSize');
 figure('Position', [50 100 scrsz(3)*0.9 scrsz(4)*0.6]);        
 
+
 hold on
 
 query = sprintf(query_template, symbol, symbol, symbol);
@@ -29,4 +30,9 @@ bsr_pvsum_chart(cell2mat(result(:,2)), cell2mat(result(:,3)), cell2mat(result(:,
 
 hold off
 
- editmenufcn(gcf,'EditCopyFigure');
+%editmenufcn(gcf,'EditCopyFigure');
+
+set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
+savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
+mkdir(savepath);
+print(gcf, '-dpng', fullfile(savepath,sprintf('pvsum15@%s.png',date)), '-r100');

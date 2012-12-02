@@ -25,3 +25,8 @@ bsr_broker_bydate_chart([cell2mat(result(:,2)), cell2mat(result(:,3))*-1, cell2m
 
 
 hold off
+
+set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
+savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
+mkdir(savepath);
+print(gcf, '-dpng', fullfile(savepath,sprintf('bsd-%s@%s.png',broker,date)), '-r100');
