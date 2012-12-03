@@ -28,7 +28,7 @@ result = result(cellfun(@(x) ~ismember(x, FIBrokers(:,1)), result(:,3)), :);
 result = sortrows(result, 7);
 
 n = size(result, 1);
-idx(1:n) = True;
+idx(1:n) = 1;
 idx(2:n) = ~strcmp(result(1:n-1,7),result(2:n,7));
 
 result1 = sortrows(result, [7 6]);
@@ -46,13 +46,13 @@ end
 
 top15result = cat(1,result1(logical(aidx),:), result2(logical(didx),:));
 top15result = sortrows(top15result, 7);
-clear result, result1, result2;
+clear result result1 result2 idx;
 
 disp('Summing');
 
 n = size(top15result, 1);
 idx(1:n) = 1;
-idx(2:n) = ~strcmp(result(1:n-1,7),result(2:n,7));
+idx(2:n) = ~strcmp(top15result(1:n-1,7),top15result(2:n,7));
 
 idx = cumsum(idx);
 buy = accumarray(idx', [top15result{:,4}]');
