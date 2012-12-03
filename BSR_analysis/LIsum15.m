@@ -25,21 +25,42 @@ disp('Filtering');
 load('FIBrokers.mat');
 
 result = result(cellfun(@(x) ~ismember(x, FIBrokers(:,1)), result(:,3)), :);
-
-disp('Summing');
 result = sortrows(result, 7);
 
 n = size(result, 1);
+idx(1:n) = True;
+idx(2:n) = ~strcmp(result(1:n-1,7),result(2:n,7));
+
+result1 = sortrows(result, [7 6]);
+aidx = idx;
+for i = 1:14,
+    aidx = aidx + [repmat([0], 1, i)  idx(1:n-i)];
+end
+
+
+result2 = sortrows(result, [7 -6]);
+didx = idx;
+for i = 1:14,
+    didx = didx + [repmat([0], 1, i)  idx(1:n-i)];
+end
+
+top15result = cat(1,result1(logical(aidx),:), result2(logical(didx),:));
+top15result = sortrows(top15result, 7);
+clear result, result1, result2;
+
+disp('Summing');
+
+n = size(top15result, 1);
 idx(1:n) = 1;
 idx(2:n) = ~strcmp(result(1:n-1,7),result(2:n,7));
 
 idx = cumsum(idx);
-buy = accumarray(idx', [result{:,4}]');
-sell = accumarray(idx', [result{:,5}]');
+buy = accumarray(idx', [top15result{:,4}]');
+sell = accumarray(idx', [top15result{:,5}]');
 net = buy - sell;
 
 disp('Drawing');
-title_s = sprintf('內資買賣 for %d', symbol);
-bsr_pvsum_chart(buy, sell*-1, [volume{:}]', unique(result(:,7)), HLOC, title_s)
+title_s = sprintf('內資 top15 買賣 for %d', symbol);
+bsr_pvsum_chart(buy, sell*-1, [volume{:}]', unique(top15result(:,7)), HLOC, title_s)
 
 hold off
