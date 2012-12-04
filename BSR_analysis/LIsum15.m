@@ -64,3 +64,8 @@ title_s = sprintf('¤º¸ê top15 ¶R½æ for %d', symbol);
 bsr_pvsum_chart(buy, sell*-1, [volume{:}]', unique(top15result(:,7)), HLOC, title_s)
 
 hold off
+
+set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
+savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
+mkdir(savepath);
+print(gcf, '-dpng', fullfile(savepath,sprintf('LIsum15@%s.png',date)), '-r100');
