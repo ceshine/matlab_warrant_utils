@@ -22,19 +22,34 @@ function [ up1_y, flat_y, lo1_y ] = drawPriceToTimeChart( warrant, upper_limit, 
     up2 = round(spot_price * (upper_limit+1) / 2 * 10) / 10;
     lo2 = round(spot_price * (lower_limit+1) / 2 * 10) / 10;
     
-    % only do put for now
-    for i = date_axis,
-        idx = i - datenum(date) + 1;
-        [c, Put] = blsprice(spot_price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
-        flat_y(idx) = Put;
-        [c, Put] = blsprice(up1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
-        up1_y(idx) = Put;
-        [c, Put] = blsprice(lo1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
-        lo1_y(idx) = Put;
-        [c, Put] = blsprice(up2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
-        up2_y(idx) = Put;
-        [c, Put] = blsprice(lo2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
-        lo2_y(idx) = Put;
+    if call
+         for i = date_axis,
+            idx = i - datenum(date) + 1;
+            [c, Put] = blsprice(spot_price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            flat_y(idx) = c;
+            [c, Put] = blsprice(up1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            up1_y(idx) = c;
+            [c, Put] = blsprice(lo1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            lo1_y(idx) = c;
+            [c, Put] = blsprice(up2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            up2_y(idx) = c;
+            [c, Put] = blsprice(lo2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            lo2_y(idx) = c;
+        end
+    else
+        for i = date_axis,
+            idx = i - datenum(date) + 1;
+            [c, Put] = blsprice(spot_price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            flat_y(idx) = Put;
+            [c, Put] = blsprice(up1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            up1_y(idx) = Put;
+            [c, Put] = blsprice(lo1*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            lo1_y(idx) = Put;
+            [c, Put] = blsprice(up2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            up2_y(idx) = Put;
+            [c, Put] = blsprice(lo2*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-i+1)/365, implied_volatility);
+            lo2_y(idx) = Put;
+        end
     end
     
     hFig = figure(3);

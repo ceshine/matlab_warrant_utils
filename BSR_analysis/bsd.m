@@ -5,7 +5,7 @@ query_template = [ 'SELECT date, SUM(buy), SUM(sell), SUM(buy)-SUM(sell) ' ...
                    'GROUP BY date;' ];
 
                
-query_template_2 = [ 'SELECT a.date, high, low, open, close FROM (SELECT date, high, low, open, close FROM twse_stock_prices WHERE company_id = %d) AS a '...
+query_template_2 = [ 'SELECT a.date, high, low, open, close FROM (SELECT date, high, low, open, close FROM prices WHERE symbol = %d) AS a '...
                       'JOIN (SELECT date FROM bsreport WHERE broker_id = (SELECT id FROM brokers WHERE name = "%s") AND company_id = %d GROUP BY date) AS b ON a.date = b.date;'];
 
 
@@ -29,4 +29,4 @@ hold off
 set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
 savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
 mkdir(savepath);
-print(gcf, '-dpng', fullfile(savepath,sprintf('bsd-%s@%s.png',broker,date)), '-r100');
+print(gcf, '-dpng', fullfile(savepath,sprintf('bsd-%s.png',broker)), '-r100');

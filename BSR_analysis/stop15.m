@@ -30,5 +30,5 @@ function [] = stop15(symbol, ddate)
     set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
     savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
     mkdir(savepath);
-    print(gcf, '-dpng', fullfile(savepath,sprintf('stop15@%s.png',date)), '-r100');
+    print(gcf, '-dpng', fullfile(savepath,sprintf('stop15@%s.png',ddate)), '-r100');
 end

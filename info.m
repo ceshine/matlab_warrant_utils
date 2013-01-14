@@ -7,11 +7,17 @@ if strcmp(warrant, 'show') == 1,
     end
 else
     warrant = strcat('w', warrant);
-    [price, leverage] = getLeverage(warrant, 0);
+
+    if warrant(7) == 'P'
+        [price, leverage] = getLeverage(warrant, 0);
+        drawPriceToPriceChart(warrant, 0);
+    else
+        [price, leverage] = getLeverage(warrant, 1);
+        drawPriceToPriceChart(warrant, 1);
+    end
+    
     fprintf('\nSpot Price for %s: %.2f\n', warrants.(warrant).spot, stocks.(warrants.(warrant).spot).price);
     fprintf('Warrant Price: %.2f\nLeverage: %.2f\n\n', price, leverage);
-    
-    drawPriceToPriceChart(warrant, 1);
     
     upper = input('\nUpper Volatility:(0 to skip drawing, enter to use default)  ');
     if isempty(upper)
@@ -29,8 +35,12 @@ else
     else
         lower = (100 - lower) / 100;
     end
-
-    [upper_y, flat_y, lower_y] = drawPriceToTimeChart(warrant, upper, lower, 1);
+    
+    if warrant(7) == 'P'
+        [upper_y, flat_y, lower_y] = drawPriceToTimeChart(warrant, upper, lower, 0);
+    else
+        [upper_y, flat_y, lower_y] = drawPriceToTimeChart(warrant, upper, lower, 1);
+    end
 
     fprintf('7-day spot-up return: %.2f%%\n', upper_y(8)*100/flat_y(1) - 100);
     fprintf('7-day spot-down return: %.2f%%\n', lower_y(8)*100/flat_y(1) - 100);

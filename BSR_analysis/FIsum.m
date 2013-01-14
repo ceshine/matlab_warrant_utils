@@ -2,7 +2,7 @@ function [] = FIsum(symbol)
     symbol = str2num(symbol);
     
     query_template = ['SELECT * FROM bssummary WHERE company_id = %d AND date > "2012-10-01";'];
-    query_template_2 = [ 'SELECT date, high, low, open, close FROM twse_stock_prices WHERE company_id = %d AND date > "2012-10-01";'];
+    query_template_2 = [ 'SELECT date, high, low, open, close FROM prices WHERE symbol = %d AND date > "2012-10-01";'];
     query_template_3 = [ 'SELECT volume FROM bsvolume WHERE company_id = %d AND date > "2012-10-01";'];
 
     query = sprintf(query_template, symbol);
@@ -46,5 +46,5 @@ function [] = FIsum(symbol)
     set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
     savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
     mkdir(savepath);
-    print(gcf, '-dpng', fullfile(savepath,sprintf('FIsum@%s.png',date)), '-r100');
+    print(gcf, '-dpng', fullfile(savepath,sprintf('FIsum.png')), '-r100');
 end

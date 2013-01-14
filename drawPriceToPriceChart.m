@@ -15,15 +15,25 @@ function [ x_axis, y_axis ] = drawPriceToPriceChart( warrant, call)
     x_axis = round(spot_price)*0.7:0.25:round(spot_price)*1.3;
     y_axis = zeros(1, length(x_axis));
 
-    [call, put]  = blsprice(spot_price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-today+1)/365, implied_volatility); 
-    warrant_c_price = put;
-    
-    % only do put for now
-    for i = 1:length(x_axis),
-        [call, put] = blsprice(x_axis(i)*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-today+1)/365, implied_volatility);
-        y_axis(i) = put/warrant_c_price;
+    [c, put]  = blsprice(spot_price*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-today+1)/365, implied_volatility); 
+    if call == 1
+        warrant_price = c;
+    else
+        warrant_price = put;
     end
     
+    % only do put for now
+    if call
+        for i = 1:length(x_axis),
+            [c, put] = blsprice(x_axis(i)*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-today+1)/365, implied_volatility);
+            y_axis(i) = c/warrant_price;
+        end
+    else
+        for i = 1:length(x_axis),
+            [c, put] = blsprice(x_axis(i)*strike_ratio, strike_price*strike_ratio , 0.0143, (mature_date-today+1)/365, implied_volatility);
+            y_axis(i) = put/warrant_price;
+        end
+    end 
     clf
     hFig = figure(1);
     set(hFig, 'Position', [400 100 1000 800])

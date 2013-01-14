@@ -21,14 +21,14 @@ title_s = sprintf('Buyers for %d from %s to %s', symbol, from_d, to_d);
 bsr_bybroker_chart([cell2mat(result(:,3)), cell2mat(result(:,4))*-1, cell2mat(result(:,5))], result(:,2), title_s);
 
 query = sprintf(query_template, symbol, from_d, to_d, 'ASC');
-result = sql_query(query);
+result2 = sql_query(query);
 title_s = sprintf('Sellers for %d from %s to %s', symbol, from_d, to_d);
 subplot(2,1,2);
-bsr_bybroker_chart([cell2mat(result(:,3)), cell2mat(result(:,4))*-1, cell2mat(result(:,5))], result(:,2), title_s);
+bsr_bybroker_chart([cell2mat(result2(:,3)), cell2mat(result2(:,4))*-1, cell2mat(result2(:,5))], result2(:,2), title_s);
 
 hold off
 
-set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
-savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
-mkdir(savepath);
-print(gcf, '-dpng', fullfile(savepath,sprintf('top15@%s.png',date)), '-r100');
+%set(gcf,'PaperUnits','inches','PaperPosition',[0 0 16 7]);
+%savepath = sprintf('C:\\Cloud Storage\\Dropbox\\analysis\\%d', symbol);
+%mkdir(savepath);
+%print(gcf, '-dpng', fullfile(savepath,sprintf('top15@%s.png',date)), '-r100');
