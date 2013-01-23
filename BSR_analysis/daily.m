@@ -6,9 +6,9 @@ for i = 1:length(symbols),
     pvsum15(symbol)
     stop15(symbol,ddate)
     FIsum(symbol)
-    close
-    LIsum15(symbol)
-    close
+    %close
+    %LIsum15(symbol)
+    %close
 end
 
     
