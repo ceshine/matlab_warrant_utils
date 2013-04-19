@@ -1,18 +1,22 @@
-function [] = LIsum15(symbol)
+function [] = LIsum15(symbol, from_date)
     symbol = str2num(symbol);
     
-    query_template = ['SELECT * FROM bssummary WHERE company_id = %d AND date > "2012-10-01 ORDER BY date";'];
-    query_template_2 = [ 'SELECT date, high, low, open, close FROM prices WHERE symbol = %d AND date > "2012-10-01";'];
-    query_template_3 = [ 'SELECT volume FROM bsvolume WHERE company_id = %d AND date > "2012-10-01";'];
+    if nargin < 2
+        from_date = '2012-12-01';
+    end
+    
+    query_template = ['SELECT * FROM bssummary WHERE company_id = %d AND date > "%s" ORDER BY date;'];
+    query_template_2 = [ 'SELECT date, high, low, open, close FROM prices WHERE symbol = %d AND date > "%s";'];
+    query_template_3 = [ 'SELECT volume FROM bsvolume WHERE company_id = %d AND date > "%s";'];
 
-    query = sprintf(query_template, symbol);
+    query = sprintf(query_template, symbol, from_date);
     result = sql_query(query);
 
-    query2 = sprintf(query_template_2, symbol);
+    query2 = sprintf(query_template_2, symbol, from_date);
     prices = sql_query(query2);
     HLOC = [cell2mat(prices(:,2)), cell2mat(prices(:,3)), cell2mat(prices(:,4)), cell2mat(prices(:,5))];
 
-    query3 = sprintf(query_template_3, symbol);
+    query3 = sprintf(query_template_3, symbol, from_date);
     volume = sql_query(query3);
 
     scrsz = get(0, 'ScreenSize');

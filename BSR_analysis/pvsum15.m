@@ -1,13 +1,18 @@
-function [ ] = pvsum15( symbol )
+function [ ] = pvsum15( symbol, from_d )
     symbol = str2num(symbol);
+
+    if nargin < 2
+        from_d =  '2012-12-01';
+    end
+    
     query_template = [ 'SELECT ddate, tbuy, tsell, volume '...
                         'FROM (SELECT date as ddate,tbuy, tsell FROM '...
-                        '(SELECT * FROM (SELECT SUM(tnet) as tbuy,date FROM bstop15 WHERE tnet > 0 AND company_id = %d AND date > "2012-10-01" GROUP BY date) as bbuy '...
-                        'JOIN (SELECT SUM(tnet) as tsell,date as ddate FROM bstop15 WHERE tnet < 0 AND company_id = %d AND date > "2012-10-01" GROUP BY date) as bsell ON bbuy.date = bsell.ddate) AS a) AS b '...
+                        '(SELECT * FROM (SELECT SUM(tnet) as tbuy,date FROM bstop15 WHERE tnet > 0 AND company_id = %d AND date > "%s" GROUP BY date) as bbuy '...
+                        'JOIN (SELECT SUM(tnet) as tsell,date as ddate FROM bstop15 WHERE tnet < 0 AND company_id = %d AND date > "%s" GROUP BY date) as bsell ON bbuy.date = bsell.ddate) AS a) AS b '...
                         'JOIN bsvolume '...
                         'ON bsvolume.company_id = %d AND bsvolume.date = b.ddate ORDER BY date ASC' ];
 
-    query_template_2 = [ 'SELECT date, high, low, open, close FROM prices WHERE symbol = %d AND date > "2012-10-01";'];
+    query_template_2 = [ 'SELECT date, high, low, open, close FROM prices WHERE symbol = %d AND date > "%s";'];
 
     scrsz = get(0, 'ScreenSize');
     figure('Position', [50 100 scrsz(3)*0.9 scrsz(4)*0.6]);        
@@ -15,10 +20,10 @@ function [ ] = pvsum15( symbol )
 
     hold on
 
-    query = sprintf(query_template, symbol, symbol, symbol);
+    query = sprintf(query_template, symbol, from_d, symbol, from_d, symbol);
     result = sql_query(query);
 
-    query2 = sprintf(query_template_2, symbol);
+    query2 = sprintf(query_template_2, symbol, from_d);
     prices = sql_query(query2);
     HLOC = [cell2mat(prices(:,2)), cell2mat(prices(:,3)), cell2mat(prices(:,4)), cell2mat(prices(:,5))];
 
